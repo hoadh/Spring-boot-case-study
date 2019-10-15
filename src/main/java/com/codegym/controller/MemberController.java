@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,9 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @SessionAttributes("squad")
 public class MemberController {
 
@@ -191,9 +195,82 @@ public class MemberController {
 
         return "redirect:/home";
     }
+
     @GetMapping("/listSquad")
     public String listSquad(){
         return "listSquad";
+    }
+
+    //WEB Service
+
+    @ResponseBody
+    @RequestMapping(value = "/", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<FootballPlayer>> listMember(){
+        List<FootballPlayer> footballPlayers = footballPlayerService.findAll();
+        if (footballPlayers.isEmpty()){
+            return new ResponseEntity<List<FootballPlayer>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<FootballPlayer>>(footballPlayers,HttpStatus.OK);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FootballPlayer> getMember(@PathVariable long id){
+        FootballPlayer footballPlayer=footballPlayerService.findOne(id);
+        if(footballPlayer==null){
+            return new ResponseEntity<FootballPlayer>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<FootballPlayer>(footballPlayer,HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FootballPlayer> deleteMember(@PathVariable long id){
+        if (footballPlayerService.findOne(id)==null){
+            return new ResponseEntity<FootballPlayer>(HttpStatus.NO_CONTENT);
+        }else {
+            FootballPlayer footballPlayer = footballPlayerService.findOne(id);
+            footballPlayerService.delete(id);
+            return new ResponseEntity<FootballPlayer>(footballPlayer,HttpStatus.OK);
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/add" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> addMember(@Validated @ModelAttribute FootballPlayer footballPlayer){
+        footballPlayerService.save(footballPlayer);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FootballPlayer> updateMember(@PathVariable("id") long id,
+                                                      @RequestBody FootballPlayer footballPlayer) {
+        FootballPlayer originMember = footballPlayerService.findOne(id);
+
+        if (originMember == null) {
+            return new ResponseEntity<FootballPlayer>(HttpStatus.NOT_FOUND);
+        }
+
+        originMember.setFirstName(footballPlayer.getFirstName());
+        originMember.setLastName(footballPlayer.getLastName());
+        originMember.setAddress(footballPlayer.getAddress());
+        originMember.setAge(footballPlayer.getAge());
+        originMember.setHeight(footballPlayer.getHeight());
+        originMember.setWeight(footballPlayer.getWeight());
+
+
+        if (footballPlayer.getLocation() != null) {
+            Location originLocation = locationService.findOne(footballPlayer.getLocation().getId());
+            if (originLocation == null) {
+                return new ResponseEntity<FootballPlayer>(HttpStatus.BAD_REQUEST);
+            }
+            originMember.setLocation(originLocation);
+        }
+
+        footballPlayerService.save(originMember);
+        return new ResponseEntity<FootballPlayer>(originMember, HttpStatus.OK);
     }
 
 }
