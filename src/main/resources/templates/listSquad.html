@@ -5,30 +5,9 @@
 </head>
 <body>
 <div class="container">
-    <h3>Football Management</h3>
-    <div>
-        <div class="search">
-        <form action="home">
-            <tr>
-                <td><input name="s" type="text"></td>
-                <td><input type="submit" value="Search"></td>
-            </tr>
-            <br>
-            <br>
+    <h3>Squad Management</h3>
 
-        </form>
-        </div>
-        <div class="search">
-            <a th:href="@{/listSquad}">List Squad <span th:text="${squad.getSize()}"></span></a>
-            <br>
-            <br>
-        </div>
-
-    </div>
-    <div>
         <form action="">
-
-
             <table>
                 <tr>
                     <td>Number</td>
@@ -38,10 +17,10 @@
                     <td>Address</td>
                     <td>Location</td>
                     <td>Picture</td>
-                    <td colspan="3"><a href="/create">Add New Member</a></td>
+                    <td>Edit</td>
                 </tr>
 
-                <tr th:each="p : ${persons}">
+                <tr th:each="p : ${squad.getSquad()}">
                     <td th:text="${p.id}"></td>
                     <td th:text="${p.firstName}"></td>
                     <td th:text="${p.lastName}"></td>
@@ -50,19 +29,12 @@
                     <td th:text="${p.location.name}"></td>
                     <td><a th:href="@{/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
                     </td>
-                    <td><a th:href="@{/edit/{id}(id=${p.id})}">Edit</a></td>
                     <td><a th:href="@{/delete/{id}(id=${p.id})}">Delete</a></td>
-                    <td><a th:href="@{/addSquad/{id}(id=${p.id})}">Add</a></td>
+
                 </tr>
             </table>
         </form>
     </div>
-</div>
-
-<div>
-    <a th:href="@{'/home?page='+${persons.number -1}+'&s='+ ${search}  }" th:if="${persons.hasPrevious()}">Previous</a>
-    <span th:text="${persons.number + 1}"></span>/<span th:text="${persons.totalPages}"></span>
-    <a th:href="@{'/home?page='+${persons.number +1}+'&s='+ ${search}  }" th:if="${persons.hasNext()}">Next</a>
 </div>
 
 <hr>

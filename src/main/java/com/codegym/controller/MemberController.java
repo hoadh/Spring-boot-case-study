@@ -3,6 +3,7 @@ package com.codegym.controller;
 import com.codegym.model.FootballPlayer;
 import com.codegym.model.Location;
 import com.codegym.model.MyFile;
+import com.codegym.model.Squad;
 import com.codegym.service.FootballPlayerService;
 import com.codegym.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,13 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Controller
+@SessionAttributes("squad")
 public class MemberController {
+
+    @ModelAttribute("squad")
+    public Squad setupSquad(){
+        return new Squad();
+    }
 
     @Autowired
     private FootballPlayerService footballPlayerService;
@@ -34,7 +41,7 @@ public class MemberController {
         return locationService.findAll();
     }
 
-
+    //home page
     @GetMapping("home")
     public ModelAndView home(@RequestParam("s") Optional<String> s,
                              @RequestParam(defaultValue = "0") int page,
@@ -63,6 +70,8 @@ public class MemberController {
 
         return modelAndView;
     }
+
+
 
     @PostMapping("create")
     public ModelAndView addMember(FootballPlayer footballPlayer) {
@@ -144,7 +153,7 @@ public class MemberController {
 
         return "redirect:/home";
     }
-
+    //edit image
     @RequestMapping(value = "/editFile/{id}", method = RequestMethod.POST)
     public String editdFile(@PathVariable long id, MyFile myFile, Model model) throws IOException {
 
@@ -162,6 +171,22 @@ public class MemberController {
 
 
         return "edit";
+    }
+
+    // add Squad
+    @GetMapping("/addSquad/{id}")
+    public String addSquad(@PathVariable long id, @ModelAttribute("squad") Squad squad){
+
+        if (!squad.contain(id)){
+            squad.addSquad(footballPlayerService.findOne(id));
+            System.out.println(squad.getSize());
+        }
+
+        return "redirect:/home";
+    }
+    @GetMapping("/listSquad")
+    public String listSquad(){
+        return "listSquad";
     }
 
 }
