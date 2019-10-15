@@ -65,7 +65,7 @@ public class CaseStudyApplication {
 
 
 			// Image resource.
-			registry.addResourceHandler("/image/**").addResourceLocations("classpath:/images/");
+			registry.addResourceHandler("/image/**").addResourceLocations("file:/home/min2208/Documents/pictures/");
 
 		}
 
