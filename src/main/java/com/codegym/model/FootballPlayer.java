@@ -1,6 +1,8 @@
 package com.codegym.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "football_players")
@@ -8,9 +10,9 @@ public class FootballPlayer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @NotEmpty
     private String firstName;
-
+    @NotEmpty
     private String lastName;
 
     public FootballPlayer(String firstName, String lastName, String img, String address, String age, String height, String weight) {
@@ -23,32 +25,23 @@ public class FootballPlayer {
         this.weight = weight;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
     public FootballPlayer(){}
 
 
     public String img;
 
-    public String getImg() {
-        return img;
-    }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
-
+    @NotEmpty
     private String address;
 
+    @NotEmpty
     private String age;
 
+    @NotEmpty
     private String height;
 
+    @NotEmpty
     private String weight;
 
     @ManyToOne
@@ -109,5 +102,19 @@ public class FootballPlayer {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 }

@@ -4,7 +4,7 @@
 
 </head>
 <body>
-<h3>Edit Form</h3>
+<h3 th:text="#{EditForm}"></h3>
 <i th:text="${message}"></i>
 <div class="container">
     <div class="left">
@@ -30,37 +30,37 @@
                     <input th:field="*{img}" type="hidden">
                 </tr>
                 <tr>
-                    <td>First Name</td>
+                    <td th:text="#{FirstName}"></td>
                     <td><input th:field="*{firstName}" type="text"></td>
                 </tr>
                 <tr>
-                    <td>Last Name</td>
+                    <td th:text="#{LastName}"></td>
                     <td><input th:field="*{lastName}" type="text"></td>
                 </tr>
                 <tr>
-                    <td>Age</td>
+                    <td th:text="#{Age}"></td>
                     <td><input th:field="*{age}" type="text"></td>
                 </tr>
                 <tr>
-                    <td>Address</td>
+                    <td th:text="#{Address}"></td>
                     <td><input th:field="*{address}" type="text"></td>
                 </tr>
                 <tr>
-                    <td>Height</td>
+                    <td th:text="#{Height}"></td>
                     <td><input th:field="*{height}" type="text"></td>
                 </tr>
                 <tr>
-                    <td>Weight</td>
+                    <td th:text="#{Weight}"></td>
                     <td><input th:field="*{weight}" type="text"></td>
                 </tr>
                 <tr>
-                    <td>Location</td>
+                    <td th:text="#{Location}"></td>
                     <td><select name="location">
                         <option th:each="p : ${location}" th:text="${p.name}" th:value="${p.id}"></option>
                     </select></td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Add"></td>
+                    <td><input type="submit" th:value="#{Add}"></td>
                     <td><a href="/home">Go Home</a></td>
                 </tr>
             </table>
@@ -69,7 +69,10 @@
         </form>
     </div>
 </div>
-
+<br>
+Language: <a href="?lang=en">English</a> | <a href="?lang=fr">VietNamese</a>
+<br>
+<hr>
 <footer th:replace="layout :: footer"></footer>
 </body>
 </html>

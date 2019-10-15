@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,7 +68,7 @@ public class MemberController {
     //Add member
     @GetMapping("create")
     public ModelAndView createForm() {
-        ModelAndView modelAndView = new ModelAndView("create", "persons", new FootballPlayer());
+        ModelAndView modelAndView = new ModelAndView("create", "footballPlayer", new FootballPlayer());
 
         return modelAndView;
     }
@@ -74,7 +76,12 @@ public class MemberController {
 
 
     @PostMapping("create")
-    public ModelAndView addMember(FootballPlayer footballPlayer) {
+    public ModelAndView addMember(@Validated @ModelAttribute FootballPlayer footballPlayer, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()){
+            ModelAndView modelAndView=new ModelAndView("create");
+            return modelAndView;
+        }
+
         ModelAndView modelAndView = new ModelAndView("upload");
         FootballPlayer newPerson = footballPlayerService.save(footballPlayer);
         modelAndView.addObject("person", newPerson);

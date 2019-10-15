@@ -5,19 +5,19 @@
 </head>
 <body>
 <div class="container">
-    <h3>Squad Management</h3>
+    <h3 th:text="#{SquadManagement}"></h3>
 
         <form action="">
             <table>
                 <tr>
-                    <td>Number</td>
-                    <td>First Name</td>
-                    <td>Last Name</td>
-                    <td>Age</td>
-                    <td>Address</td>
-                    <td>Location</td>
-                    <td>Picture</td>
-                    <td>Edit</td>
+                    <td th:text="#{ID}"></td>
+                    <td th:text="#{FirstName}"></td>
+                    <td th:text="#{LastName}"></td>
+                    <td th:text="#{Age}"></td>
+                    <td th:text="#{Address}"></td>
+                    <td th:text="#{Location}"></td>
+                    <td th:text="#{Picture}"></td>
+                    <td th:text="#{Edit}"></td>
                 </tr>
 
                 <tr th:each="p : ${squad.getSquad()}">
@@ -36,7 +36,9 @@
         </form>
     </div>
 </div>
-
+<br>
+Language: <a href="?lang=en">English</a> | <a href="?lang=fr">VietNamese</a>
+<br>
 <hr>
 <footer th:replace="layout:: footer"></footer>
 </body>

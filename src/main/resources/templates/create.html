@@ -5,48 +5,51 @@
 </head>
 <body>
 <div class="container">
-<form method="post" th:action="@{/create}" th:object="${persons}">
+<form method="post" th:action="@{/create}" th:object="${footballPlayer}">
     <h3>Create Form</h3>
     <table>
         <tr>
-            <td>First Name</td>
-            <td><input th:field="*{firstName}" type="text"></td>
+            <td th:text="#{FirstName}"></td>
+            <td><input th:field="*{firstName}" type="text"><span th:if="${#fields.hasErrors()}" th:text="#{NotEmpty.footballPlayer.firstName}"></span></td>
         </tr>
         <tr>
-            <td>Last Name</td>
-            <td><input th:field="*{lastName}" type="text"></td>
+            <td th:text="#{LastName}"></td>
+            <td><input th:field="*{lastName}" type="text"><span th:if="${#fields.hasErrors('lastName')}" th:text="#{NotEmpty.footballPlayer.lastName}"></span></td>
         </tr>
         <tr>
-            <td>Age</td>
-            <td><input th:field="*{age}" type="text"></td>
+            <td th:text="#{Age}"></td>
+            <td><input th:field="*{age}" type="text"><span th:if="${#fields.hasErrors('age')}" th:text="#{NotEmpty.footballPlayer.age}"></span></td>
         </tr>
         <tr>
-            <td>Address</td>
-            <td><input th:field="*{address}" type="text"></td>
+            <td th:text="#{Address}"></td>
+            <td><input th:field="*{address}" type="text"><span th:if="${#fields.hasErrors('address')}" th:text="#{NotEmpty.footballPlayer.address}"></span></td>
         </tr>
         <tr>
-            <td>Height</td>
-            <td><input th:field="*{height}" type="text"></td>
+            <td th:text="#{Height}"></td>
+            <td><input th:field="*{height}" type="text"><span th:if="${#fields.hasErrors('height')}" th:text="#{NotEmpty.footballPlayer.height}"></span></td>
         </tr>
         <tr>
-            <td>Weight</td>
-            <td><input th:field="*{weight}" type="text"></td>
+            <td th:text="#{Weight}"></td>
+            <td><input th:field="*{weight}" type="text"><span th:if="${#fields.hasErrors('weight')}" th:text="#{NotEmpty.footballPlayer.weight}"></span></td>
         </tr>
         <tr>
-            <td>Position</td>
+            <td th:text="#{Location}"></td>
             <td><select name="location">
                 <option th:each="p : ${location}" th:text="${p.name}" th:value="${p.id}"></option>
             </select></td>
         </tr>
         <tr>
-            <td><input type="submit" value="Add"></td>
+            <td><input type="submit" th:value="#{Add}"></td>
         </tr>
     </table>
 
 
 </form>
 </div>
-
+<br>
+Language: <a href="?lang=en">English</a> | <a href="?lang=fr">VietNamese</a>
+<br>
+<hr>
 <footer th:replace="layout :: footer"></footer>
 </body>
 </html>

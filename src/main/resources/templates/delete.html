@@ -4,57 +4,63 @@
 
 </head>
 <body>
+<h3 th:text="#{DeleteForm}"></h3>
 <div class="container">
-<div>
-    <img alt="" th:src="@{'/image/'+${person.getImg()}}">
-    <i th:text="${message}"></i>
-</div>
-<a href="/home">Go Home</a>
-<div>
 
-    <h3>Delete Form</h3>
-    <form method="post" th:action="@{/delete/{id}(id=${person.id})}">
-        <table>
-            <tr>
-                <td>ID</td>
-                <td th:text="${person.id}"></td>
-            </tr>
-            <tr>
-                <td>First Name</td>
-                <td th:text="${person.firstName}"></td>
-            </tr>
-            <tr>
-                <td>Last Name</td>
-                <td th:text="${person.lastName}"></td>
-            </tr>
-            <tr>
-                <td>Age</td>
-                <td th:text="${person.age}"></td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td th:text="${person.address}"></td>
-            </tr>
-            <tr>
-                <td>Position</td>
-                <td th:text="${person.location.name}"></td>
-            </tr>
-            <tr>
-                <td>Height</td>
-                <td th:text="${person.height}"></td>
-            </tr>
-            <tr>
-                <td>Weight</td>
-                <td th:text="${person.weight}"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Delete"></td>
-            </tr>
-        </table>
 
-    </form>
+    <div class="left">
+        <img class="edit" alt="" th:src="@{'/image/'+${person.getImg()}}">
+
+
+    </div>
+    <div class="right">
+        <form method="post" th:action="@{/delete/{id}(id=${person.id})}">
+            <table>
+                <tr>
+                    <td th:text="#{ID}"></td>
+                    <td th:text="${person.id}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{FirstName}"></td>
+                    <td th:text="${person.firstName}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{LastName}"></td>
+                    <td th:text="${person.lastName}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{Age}"></td>
+                    <td th:text="${person.age}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{Address}"></td>
+                    <td th:text="${person.address}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{Location}"></td>
+                    <td th:text="${person.location.name}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{Height}"></td>
+                    <td th:text="${person.height}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{Weight}"></td>
+                    <td th:text="${person.weight}"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" th:value="#{Delete}"></td>
+                    <td><a href="/home">Go Home</a></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
 </div>
-</div>
+<br>
+Language: <a href="?lang=en">English</a> | <a href="?lang=fr">VietNamese</a>
+<br>
+<hr>
 <footer th:replace="layout :: footer"></footer>
 </body>
 </html>
