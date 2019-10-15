@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: header">
+
+</head>
+<body>
+
+<form method="post" th:action="@{/create}" th:object="${persons}">
+    <h3>Create Form</h3>
+    <table>
+        <tr>
+            <td>First Name</td>
+            <td><input th:field="*{firstName}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td><input th:field="*{lastName}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td><input th:field="*{age}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td><input th:field="*{address}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Height</td>
+            <td><input th:field="*{height}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Weight</td>
+            <td><input th:field="*{weight}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Position</td>
+            <td><select name="position">
+                <option th:each="p : ${location}" th:text="${p.name}" th:value="${p.id}"></option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Add"></td>
+        </tr>
+    </table>
+
+
+</form>
+
+
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: header">
+
+</head>
+<body>
+<h2>Update Images</h2>
+<form enctype="multipart/form-data" method="post" th:action="@{/uploadFile/{id}(id=${person.id})}"
+      th:object="${myFile}">
+    Images: <input th:field="*{multipartFile}" type="file"/> <br/> <br/>
+    <input type="submit" value="Submit" />
+</form>
+<form action="">
+    <table>
+        <tr>
+            <td>ID</td>
+            <td th:text="${person.id}"></td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td th:text="${person.firstName}"></td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td th:text="${person.lastName}"></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td th:text="${person.age}"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td th:text="${person.address}"></td>
+        </tr>
+        <tr>
+            <td>Position</td>
+            <td th:text="${person.location.name}"></td>
+        </tr>
+        <tr>
+            <td>Height</td>
+            <td th:text="${person.height}"></td>
+        </tr>
+        <tr>
+            <td>Weight</td>
+            <td th:text="${person.weight}"></td>
+        </tr>
+    </table>
+
+</form>
+
+<footer th:replace="layout::footer"></footer>
+</body>
+</html>

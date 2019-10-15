@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: header">
+
+</head>
+<body>
+<div>
+    <h3>Football Management</h3>
+    <form action="home">
+        <tr>
+            <td><input name="s" type="text"></td>
+            <td><input type="submit" value="Search"></td>
+        </tr>
+    </form>
+<form action="">
+
+
+    <table>
+        <tr>
+            <td>Number</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Age</td>
+            <td>Address</td>
+            <td>Position</td>
+            <td>Picture</td>
+            <td colspan="3"><a href="/create">Add New Member</a></td>
+        </tr>
+
+        <tr th:each="p : ${persons}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.firstName}"></td>
+            <td th:text="${p.lastName}"></td>
+            <td th:text="${p.age}"></td>
+            <td th:text="${p.address}"></td>
+            <td th:text="${p.location.name}"></td>
+            <td><a th:href="@{/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a></td>
+            <td><a th:href="@{/edit/{id}(id=${p.id})}">Edit</a></td>
+            <td><a th:href="@{/delete/{id}(id=${p.id})}">Delete</a></td>
+            <td><a href="">Add</a></td>
+        </tr>
+    </table>
+</form>
+</div>
+
+<div>
+    <a th:href="@{'/home?page='+${persons.number -1}+'&s='+ ${search}  }" th:if="${persons.hasNext()}">Previous</a>
+    <span th:text="${persons.number + 1}"></span>/<span th:text="${persons.totalPages}"></span>
+    <a th:href="@{'/home?page='+${persons.number +1}+'&s='+ ${search}  }" th:if="${persons.hasNext()}">Next</a>
+</div>
+
+<hr>
+<footer th:replace="layout:: footer"></footer>
+</body>
+</html>

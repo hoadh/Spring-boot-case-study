@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: header">
+    <style>
+        .left {
+            width: 150px;
+            height: 150px;
+            float: left;
+        }
+
+        .img {
+            width: 100px;
+            height: 130px;
+        }
+    </style>
+</head>
+<body>
+<a href="/home">Go Home</a>
+<div>
+    <h3>Info</h3>
+    <img alt="" th:src="@{'/image/'+ ${person.getImg()}}">
+    <div>
+        <form>
+            <table>
+                <tr>
+                    <td>ID</td>
+                    <td th:text="${person.id}"></td>
+                </tr>
+                <tr>
+                    <td>First Name</td>
+                    <td th:text="${person.firstName}"></td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td th:text="${person.lastName}"></td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td th:text="${person.age}"></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td th:text="${person.address}"></td>
+                </tr>
+                <tr>
+                    <td>Position</td>
+                    <td th:text="${person.location.name}"></td>
+                </tr>
+                <tr>
+                    <td>Height</td>
+                    <td th:text="${person.height}"></td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td th:text="${person.weight}"></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+</div>
+
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

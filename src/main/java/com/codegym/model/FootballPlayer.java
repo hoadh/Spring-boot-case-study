@@ -3,10 +3,10 @@ package com.codegym.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "footballPlayer")
+@Table(name = "football_players")
 public class FootballPlayer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String firstName;

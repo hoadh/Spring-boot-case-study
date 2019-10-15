@@ -1,4 +1,8 @@
 package com.codegym.service;
 
-public class LocationService {
+
+import com.codegym.model.Location;
+
+public abstract class LocationService extends AbstractEntityServiceImpl<Location, Long> {
+
 }
