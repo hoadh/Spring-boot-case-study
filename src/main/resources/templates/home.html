@@ -11,6 +11,9 @@
             <td><input name="s" type="text"></td>
             <td><input type="submit" value="Search"></td>
         </tr>
+        <br>
+        <br>
+
     </form>
 <form action="">
 
@@ -22,7 +25,7 @@
             <td>Last Name</td>
             <td>Age</td>
             <td>Address</td>
-            <td>Position</td>
+            <td>Location</td>
             <td>Picture</td>
             <td colspan="3"><a href="/create">Add New Member</a></td>
         </tr>
@@ -44,7 +47,7 @@
 </div>
 
 <div>
-    <a th:href="@{'/home?page='+${persons.number -1}+'&s='+ ${search}  }" th:if="${persons.hasNext()}">Previous</a>
+    <a th:href="@{'/home?page='+${persons.number -1}+'&s='+ ${search}  }" th:if="${persons.hasPrevious()}">Previous</a>
     <span th:text="${persons.number + 1}"></span>/<span th:text="${persons.totalPages}"></span>
     <a th:href="@{'/home?page='+${persons.number +1}+'&s='+ ${search}  }" th:if="${persons.hasNext()}">Next</a>
 </div>
