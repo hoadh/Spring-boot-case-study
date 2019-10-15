@@ -81,6 +81,7 @@ public class MemberController {
     public ModelAndView editForm(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("edit");
         modelAndView.addObject("person", footballPlayerService.findOne(id));
+        modelAndView.addObject("myFile", new MyFile());
 
 
         return modelAndView;
@@ -91,6 +92,7 @@ public class MemberController {
         ModelAndView modelAndView = new ModelAndView("edit");
         footballPlayerService.save(footballPlayer);
         modelAndView.addObject("person", footballPlayer);
+        modelAndView.addObject("myFile",new MyFile());
         modelAndView.addObject("message", "update success");
         return modelAndView;
     }
@@ -143,5 +145,23 @@ public class MemberController {
         return "redirect:/home";
     }
 
+    @RequestMapping(value = "/editFile/{id}", method = RequestMethod.POST)
+    public String editdFile(@PathVariable long id, MyFile myFile, Model model) throws IOException {
+
+
+        MultipartFile multipartFile = myFile.getMultipartFile();
+        String fileName = multipartFile.getOriginalFilename();
+        FootballPlayer footballPlayer = footballPlayerService.findOne(id);
+        footballPlayer.setImg(fileName.intern());
+        footballPlayerService.save(footballPlayer);
+
+        System.out.println(fileName.intern());
+        File file = new File("/home/min2208/Documents/pictures/", fileName);
+        multipartFile.transferTo(file);
+        model.addAttribute("person",footballPlayerService.findOne(id));
+
+
+        return "edit";
+    }
 
 }

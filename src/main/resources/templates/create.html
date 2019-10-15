@@ -4,7 +4,7 @@
 
 </head>
 <body>
-
+<div class="container">
 <form method="post" th:action="@{/create}" th:object="${persons}">
     <h3>Create Form</h3>
     <table>
@@ -45,7 +45,7 @@
 
 
 </form>
-
+</div>
 
 <footer th:replace="layout :: footer"></footer>
 </body>

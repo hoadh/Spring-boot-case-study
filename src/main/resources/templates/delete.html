@@ -4,8 +4,9 @@
 
 </head>
 <body>
+<div class="container">
 <div>
-    <img alt="" th:src="@{${person.getImg()}}">
+    <img alt="" th:src="@{'/image/'+${person.getImg()}}">
     <i th:text="${message}"></i>
 </div>
 <a href="/home">Go Home</a>
@@ -53,7 +54,7 @@
 
     </form>
 </div>
-
+</div>
 <footer th:replace="layout :: footer"></footer>
 </body>
 </html>

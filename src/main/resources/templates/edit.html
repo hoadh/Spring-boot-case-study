@@ -4,58 +4,70 @@
 
 </head>
 <body>
-<div>
-    <img alt="" th:src="@{${person.getImg()}}">
-    <i th:text="${message}"></i>
-</div>
-<div>
-    <form method="post" th:action="@{/edit}" th:object="${person}">
-        <h3>Edit Form</h3>
-        <table>
-            <tr>
-                <input th:field="*{id}" type="hidden">
-            </tr>
-            <tr>
-                <input th:field="*{img}" type="hidden">
-            </tr>
-            <tr>
-                <td>First Name</td>
-                <td><input th:field="*{firstName}" type="text"></td>
-            </tr>
-            <tr>
-                <td>Last Name</td>
-                <td><input th:field="*{lastName}" type="text"></td>
-            </tr>
-            <tr>
-                <td>Age</td>
-                <td><input th:field="*{age}" type="text"></td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td><input th:field="*{address}" type="text"></td>
-            </tr>
-            <tr>
-                <td>Height</td>
-                <td><input th:field="*{height}" type="text"></td>
-            </tr>
-            <tr>
-                <td>Weight</td>
-                <td><input th:field="*{weight}" type="text"></td>
-            </tr>
-            <tr>
-                <td>Position</td>
-                <td><select name="position">
-                    <option th:each="p : ${location}" th:text="${p.name}" th:value="${p.id}"></option>
-                </select></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Add"></td>
-                <td><a href="/home">Go Home</a></td>
-            </tr>
-        </table>
+<h3>Edit Form</h3>
+<i th:text="${message}"></i>
+<div class="container">
+    <div class="left">
+        <img class="edit" alt="" th:src="@{'/image/'+${person.getImg()}}">
+
+        <form enctype="multipart/form-data" method="post" th:action="@{/editFile/{id}(id=${person.id})}"
+              th:object="${myFile}">
+            Images: <input th:field="*{multipartFile}" type="file"/> <br/> <br/>
+            <input type="submit" value="Submit"/>
+        </form>
+
+    </div>
+    <div class="right">
+
+        <form method="post" th:action="@{/edit}" th:object="${person}">
+
+            <table>
+
+                <tr>
+                    <input th:field="*{id}" type="hidden">
+                </tr>
+                <tr>
+                    <input th:field="*{img}" type="hidden">
+                </tr>
+                <tr>
+                    <td>First Name</td>
+                    <td><input th:field="*{firstName}" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td><input th:field="*{lastName}" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td><input th:field="*{age}" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td><input th:field="*{address}" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Height</td>
+                    <td><input th:field="*{height}" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td><input th:field="*{weight}" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td><select name="location">
+                        <option th:each="p : ${location}" th:text="${p.name}" th:value="${p.id}"></option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Add"></td>
+                    <td><a href="/home">Go Home</a></td>
+                </tr>
+            </table>
 
 
-    </form>
+        </form>
+    </div>
 </div>
 
 <footer th:replace="layout :: footer"></footer>
