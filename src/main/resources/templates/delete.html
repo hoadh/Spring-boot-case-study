@@ -5,13 +5,12 @@
 </head>
 <body>
 <h3 th:text="#{DeleteForm}"></h3>
+<i th:text="${message}"></i>
 <div class="container">
 
 
     <div class="left">
         <img class="edit" alt="" th:src="@{'/image/'+${person.getImg()}}">
-
-
     </div>
     <div class="right">
         <form method="post" th:action="@{/delete/{id}(id=${person.id})}">

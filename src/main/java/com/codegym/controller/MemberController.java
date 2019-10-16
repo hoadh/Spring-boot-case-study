@@ -200,6 +200,12 @@ public class MemberController {
         return "listSquad";
     }
 
+    @GetMapping("/deleteSquad/{id}")
+    public String deleteSquad(@PathVariable long id, @ModelAttribute("squad") Squad squad) {
+        squad.remove(id);
+        return "listSquad";
+    }
+
     //WEB Service
 
     @ResponseBody
