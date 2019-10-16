@@ -1,6 +1,7 @@
 package com.codegym;
 
-import cg.wbd.grandemonstration.formatter.LocationFormatter;
+
+import com.codegym.formatter.LocationFormatter;
 import com.codegym.service.FootballPlayerService;
 import com.codegym.service.FootballPlayerServiceInterface;
 import com.codegym.service.LocationService;

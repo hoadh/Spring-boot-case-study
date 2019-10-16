@@ -1,4 +1,4 @@
-package cg.wbd.grandemonstration.formatter;
+package com.codegym.formatter;
 
 
 import com.codegym.model.Location;
