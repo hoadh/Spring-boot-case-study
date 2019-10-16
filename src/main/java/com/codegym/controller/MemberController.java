@@ -158,7 +158,7 @@ public class MemberController {
         footballPlayerServiceInterface.save(footballPlayer);
 
         System.out.println(fileName.intern());
-        File file = new File("/home/min2208/Documents/pictures/", fileName);
+        File file = new File("/home/min2208/Documents/casestudy/case-study/src/main/resources/images/", fileName);
         multipartFile.transferTo(file);
 
 
