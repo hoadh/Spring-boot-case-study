@@ -12,22 +12,16 @@
 
     <div>
         <div class="search">
-        <form action="home">
-            <tr>
-                <td><input name="s" type="text"></td>
-                <td><input type="submit" value="Search"></td>
-            </tr>
-            <br>
-            <br>
+            <form action="home">
+                <tr>
+                    <td><input name="s" type="text"></td>
+                    <td><input type="submit" value="Search"></td>
+                </tr>
+                <br>
+                <br>
 
-        </form>
+            </form>
         </div>
-        <div class="search">
-            <a th:href="@{/listSquad}"><span th:text="#{ListSquad}"></span> : <span th:text="${squad.getSize()}"></span></a>
-            <br>
-            <br>
-        </div>
-
     </div>
     <div>
         <form action="">
@@ -42,7 +36,6 @@
                     <td th:text="#{Address}"></td>
                     <td th:text="#{Location}"></td>
                     <td th:text="#{Picture}"></td>
-                    <td colspan="3"><a href="/create" th:text="#{AddNewMember}"></a></td>
                 </tr>
 
                 <tr th:each="p : ${persons}">
@@ -53,11 +46,8 @@
                     <td th:text="${p.address}"></td>
                     <td th:text="${p.location.name}"></td>
                     <td>
-                        <a th:href="@{/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
+                        <a th:href="@{/member/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
                     </td>
-                    <td><a th:href="@{/edit/{id}(id=${p.id})}" th:text="#{Edit}"></a></td>
-                    <td><a th:href="@{/delete/{id}(id=${p.id})}" th:text="#{Delete}"></a></td>
-                    <td><a th:href="@{/addSquad/{id}(id=${p.id})}" th:text="#{Add}"></a></td>
                 </tr>
             </table>
         </form>
@@ -70,7 +60,7 @@
     <a th:href="@{'/home?page='+${persons.number +1}+'&s='+ ${search}  }" th:if="${persons.hasNext()}">Next</a>
 </div>
 <br>
-<form action="#" th:action="@{/logout}" method="POST">
+<form action="#" method="POST" th:action="@{/logout}">
     <button type="submit">Logout</button>
 </form>
 <br>

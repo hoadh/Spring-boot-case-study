@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: header">
+    <style>
+        .left {
+            width: 150px;
+            height: 150px;
+            float: left;
+        }
+
+        .img {
+            width: 100px;
+            height: 130px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="/homeMember">Go Home</a>
+    <div>
+        <h3 th:text="#{Info}"></h3>
+        <img alt="" th:src="@{'/image/'+ ${person.getImg()}}">
+        <div>
+            <form>
+                <table>
+                    <tr>
+                        <td th:text="#{ID}"></td>
+                        <td th:text="${person.id}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{FirstName}"></td>
+                        <td th:text="${person.firstName}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{LastName}"></td>
+                        <td th:text="${person.lastName}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{Age}"></td>
+                        <td th:text="${person.age}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{Address}"></td>
+                        <td th:text="${person.address}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{Location}"></td>
+                        <td th:text="${person.location.name}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{Height}"></td>
+                        <td th:text="${person.height}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{Weight}"></td>
+                        <td th:text="${person.weight}"></td>
+                    </tr>
+                </table>
+
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+Language: <a href="?lang=en">English</a> | <a href="?lang=fr">VietNamese</a>
+<br>
+<hr>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

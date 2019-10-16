@@ -64,24 +64,32 @@ public class MemberController {
 
     }
 
-//    @GetMapping("registry")
-//    public String registryForm(){
-//        return "registry";
-//    }
+    @GetMapping("registry")
+    public String registryForm() {
+        return "registry";
+    }
 
-//    @PostMapping("registry")
-//    public String registry(Model model,@RequestParam User user,@RequestParam String role){
-//        User admin = new User();
-//        admin.setEmail(user.getEmail());
-//        admin.setPassword(passwordEncoder.encode(user.getPassword()));
-//        HashSet<Role> roles = new HashSet<>();
-//        roles.add(roleRepository.findByName(role));
-//        admin.setRoles(roles);
-//        userRepository.save(admin);
-//
-//        model.addAttribute("message","Registed success");
-//        return "regidit";
-//    }
+    @PostMapping("registry")
+    public String registry(Model model, @RequestParam String username,
+                           @RequestParam String role,
+                           @RequestParam String password) {
+        User admin = new User();
+        admin.setEmail(username);
+        admin.setPassword(passwordEncoder.encode(password));
+        HashSet<Role> roles = new HashSet<>();
+        if (role.equals("ROLE_ADMIN")) {
+            roles.add(roleRepository.findByName("ROLE_ADMIN"));
+            roles.add(roleRepository.findByName("ROLE_MEMBER"));
+        } else {
+
+            roles.add(roleRepository.findByName(role));
+        }
+        admin.setRoles(roles);
+        userRepository.save(admin);
+
+        model.addAttribute("message", "Registed success");
+        return "registry";
+    }
 
 
 
@@ -103,7 +111,6 @@ public class MemberController {
         }
         return "redirect:/";
     }
-
 
     //home page
     @GetMapping("home")
