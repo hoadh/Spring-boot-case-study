@@ -48,7 +48,8 @@
                     <td th:text="${p.age}"></td>
                     <td th:text="${p.address}"></td>
                     <td th:text="${p.location.name}"></td>
-                    <td><a th:href="@{/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
+                    <td>
+                        <a th:href="@{/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
                     </td>
                     <td><a th:href="@{/edit/{id}(id=${p.id})}" th:text="#{Edit}"></a></td>
                     <td><a th:href="@{/delete/{id}(id=${p.id})}" th:text="#{Delete}"></a></td>

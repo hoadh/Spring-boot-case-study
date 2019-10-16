@@ -98,6 +98,7 @@ public class CaseStudyApplication {
 			registry.addFormatter(locationFormatter);
 		}
 
+
 		@Override
 		public void addInterceptors(InterceptorRegistry registry) {
 			LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
