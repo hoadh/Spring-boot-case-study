@@ -29,7 +29,7 @@
                     <td th:text="${p.location.name}"></td>
                     <td><a th:href="@{/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
                     </td>
-                    <td><a th:href="@{/delete/{id}(id=${p.id})}">Delete</a></td>
+                    <td><a th:href="@{/delete/{id}(id=${p.id})}" th:text="#{Delete}"></a></td>
 
                 </tr>
             </table>

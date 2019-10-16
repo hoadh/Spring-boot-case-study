@@ -4,8 +4,8 @@ import com.codegym.model.FootballPlayer;
 import com.codegym.model.Location;
 import com.codegym.model.MyFile;
 import com.codegym.model.Squad;
-import com.codegym.service.FootballPlayerService;
-import com.codegym.service.LocationService;
+import com.codegym.service.FootballPlayerServiceInterface;
+import com.codegym.service.LocationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,14 +37,14 @@ public class MemberController {
     }
 
     @Autowired
-    private FootballPlayerService footballPlayerService;
+    private FootballPlayerServiceInterface footballPlayerServiceInterface;
 
     @Autowired
-    private LocationService locationService;
+    private LocationServiceInterface locationServiceInterface;
 
     @ModelAttribute("location")
     public Iterable<Location> allPosition() {
-        return locationService.findAll();
+        return locationServiceInterface.findAll();
     }
 
     //home page
@@ -56,10 +56,10 @@ public class MemberController {
         ModelAndView modelAndView = new ModelAndView("home");
         Page<FootballPlayer> personPage;
         if (s.isPresent()) {
-            personPage = footballPlayerService.search(s.get(), pageable);
+            personPage = footballPlayerServiceInterface.search(s.get(), pageable);
             modelAndView.addObject("search", s.get());
         } else {
-            personPage = footballPlayerService.findAll(pageable);
+            personPage = footballPlayerServiceInterface.findAll(pageable);
             modelAndView.addObject("search", "");
         }
 
@@ -87,7 +87,7 @@ public class MemberController {
         }
 
         ModelAndView modelAndView = new ModelAndView("upload");
-        FootballPlayer newPerson = footballPlayerService.save(footballPlayer);
+        FootballPlayer newPerson = footballPlayerServiceInterface.save(footballPlayer);
         modelAndView.addObject("person", newPerson);
         modelAndView.addObject("myFile", new MyFile());
 
@@ -100,7 +100,7 @@ public class MemberController {
     @GetMapping("/edit/{id}")
     public ModelAndView editForm(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("edit");
-        modelAndView.addObject("person", footballPlayerService.findOne(id));
+        modelAndView.addObject("person", footballPlayerServiceInterface.findOne(id));
         modelAndView.addObject("myFile", new MyFile());
 
 
@@ -110,7 +110,7 @@ public class MemberController {
     @PostMapping("/edit")
     public ModelAndView edit(FootballPlayer footballPlayer) {
         ModelAndView modelAndView = new ModelAndView("edit");
-        footballPlayerService.save(footballPlayer);
+        footballPlayerServiceInterface.save(footballPlayer);
         modelAndView.addObject("person", footballPlayer);
         modelAndView.addObject("myFile",new MyFile());
         modelAndView.addObject("message", "update success");
@@ -121,7 +121,7 @@ public class MemberController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteForm(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("delete");
-        modelAndView.addObject("person", footballPlayerService.findOne(id));
+        modelAndView.addObject("person", footballPlayerServiceInterface.findOne(id));
 
         return modelAndView;
     }
@@ -129,8 +129,8 @@ public class MemberController {
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("delete");
-        FootballPlayer person = footballPlayerService.findOne(id);
-        footballPlayerService.delete(id);
+        FootballPlayer person = footballPlayerServiceInterface.findOne(id);
+        footballPlayerServiceInterface.delete(id);
         modelAndView.addObject("person", person);
         modelAndView.addObject("message", "Delete success");
         return modelAndView;
@@ -140,7 +140,7 @@ public class MemberController {
     @GetMapping("/info/{id}")
     public ModelAndView info(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("info");
-        modelAndView.addObject("person", footballPlayerService.findOne(id));
+        modelAndView.addObject("person", footballPlayerServiceInterface.findOne(id));
         modelAndView.addObject("myFile", new MyFile());
         return modelAndView;
     }
@@ -153,9 +153,9 @@ public class MemberController {
 
         MultipartFile multipartFile = myFile.getMultipartFile();
         String fileName = multipartFile.getOriginalFilename();
-        FootballPlayer footballPlayer = footballPlayerService.findOne(id);
+        FootballPlayer footballPlayer = footballPlayerServiceInterface.findOne(id);
         footballPlayer.setImg(fileName.intern());
-        footballPlayerService.save(footballPlayer);
+        footballPlayerServiceInterface.save(footballPlayer);
 
         System.out.println(fileName.intern());
         File file = new File("/home/min2208/Documents/pictures/", fileName);
@@ -171,14 +171,14 @@ public class MemberController {
 
         MultipartFile multipartFile = myFile.getMultipartFile();
         String fileName = multipartFile.getOriginalFilename();
-        FootballPlayer footballPlayer = footballPlayerService.findOne(id);
+        FootballPlayer footballPlayer = footballPlayerServiceInterface.findOne(id);
         footballPlayer.setImg(fileName.intern());
-        footballPlayerService.save(footballPlayer);
+        footballPlayerServiceInterface.save(footballPlayer);
 
         System.out.println(fileName.intern());
         File file = new File("/home/min2208/Documents/pictures/", fileName);
         multipartFile.transferTo(file);
-        model.addAttribute("person",footballPlayerService.findOne(id));
+        model.addAttribute("person", footballPlayerServiceInterface.findOne(id));
 
 
         return "edit";
@@ -189,7 +189,7 @@ public class MemberController {
     public String addSquad(@PathVariable long id, @ModelAttribute("squad") Squad squad){
 
         if (!squad.contain(id)){
-            squad.addSquad(footballPlayerService.findOne(id));
+            squad.addSquad(footballPlayerServiceInterface.findOne(id));
             System.out.println(squad.getSize());
         }
 
@@ -205,7 +205,7 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/api/", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FootballPlayer>> listMember(){
-        List<FootballPlayer> footballPlayers = footballPlayerService.findAll();
+        List<FootballPlayer> footballPlayers = footballPlayerServiceInterface.findAll();
         if (footballPlayers.isEmpty()){
             return new ResponseEntity<List<FootballPlayer>>(HttpStatus.NO_CONTENT);
         }
@@ -214,7 +214,7 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/api/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FootballPlayer> getMember(@PathVariable long id){
-        FootballPlayer footballPlayer=footballPlayerService.findOne(id);
+        FootballPlayer footballPlayer= footballPlayerServiceInterface.findOne(id);
         if(footballPlayer==null){
             return new ResponseEntity<FootballPlayer>(HttpStatus.NO_CONTENT);
         }
@@ -224,11 +224,11 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/api/delete/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FootballPlayer> deleteMember(@PathVariable long id){
-        if (footballPlayerService.findOne(id)==null){
+        if (footballPlayerServiceInterface.findOne(id)==null){
             return new ResponseEntity<FootballPlayer>(HttpStatus.NO_CONTENT);
         }else {
-            FootballPlayer footballPlayer = footballPlayerService.findOne(id);
-            footballPlayerService.delete(id);
+            FootballPlayer footballPlayer = footballPlayerServiceInterface.findOne(id);
+            footballPlayerServiceInterface.delete(id);
             return new ResponseEntity<FootballPlayer>(footballPlayer,HttpStatus.OK);
         }
 
@@ -237,7 +237,7 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/api/add" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addMember(@Validated @ModelAttribute FootballPlayer footballPlayer){
-        footballPlayerService.save(footballPlayer);
+        footballPlayerServiceInterface.save(footballPlayer);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -246,7 +246,7 @@ public class MemberController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FootballPlayer> updateMember(@PathVariable("id") long id,
                                                        @RequestBody FootballPlayer footballPlayer) {
-        FootballPlayer originMember = footballPlayerService.findOne(id);
+        FootballPlayer originMember = footballPlayerServiceInterface.findOne(id);
 
         if (originMember == null) {
             return new ResponseEntity<FootballPlayer>(HttpStatus.NOT_FOUND);
@@ -261,14 +261,14 @@ public class MemberController {
 
 
         if (footballPlayer.getLocation() != null) {
-            Location originLocation = locationService.findOne(footballPlayer.getLocation().getId());
+            Location originLocation = locationServiceInterface.findOne(footballPlayer.getLocation().getId());
             if (originLocation == null) {
                 return new ResponseEntity<FootballPlayer>(HttpStatus.BAD_REQUEST);
             }
             originMember.setLocation(originLocation);
         }
 
-        footballPlayerService.save(originMember);
+        footballPlayerServiceInterface.save(originMember);
         return new ResponseEntity<FootballPlayer>(originMember, HttpStatus.OK);
     }
 
