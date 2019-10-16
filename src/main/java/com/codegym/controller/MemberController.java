@@ -176,7 +176,7 @@ public class MemberController {
         footballPlayerServiceInterface.save(footballPlayer);
 
         System.out.println(fileName.intern());
-        File file = new File("/home/min2208/Documents/pictures/", fileName);
+        File file = new File("/pictures/", fileName);
         multipartFile.transferTo(file);
         model.addAttribute("person", footballPlayerServiceInterface.findOne(id));
 
@@ -186,6 +186,8 @@ public class MemberController {
 
     // add Squad
     @GetMapping("/addSquad/{id}")
+
+
     public String addSquad(@PathVariable long id, @ModelAttribute("squad") Squad squad){
 
         if (!squad.contain(id)){
