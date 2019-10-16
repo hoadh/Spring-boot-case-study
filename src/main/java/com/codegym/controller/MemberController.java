@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @SessionAttributes("squad")
 public class MemberController {
 
@@ -195,7 +195,6 @@ public class MemberController {
 
         return "redirect:/home";
     }
-
     @GetMapping("/listSquad")
     public String listSquad(){
         return "listSquad";
@@ -204,7 +203,7 @@ public class MemberController {
     //WEB Service
 
     @ResponseBody
-    @RequestMapping(value = "/", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FootballPlayer>> listMember(){
         List<FootballPlayer> footballPlayers = footballPlayerService.findAll();
         if (footballPlayers.isEmpty()){
@@ -213,7 +212,7 @@ public class MemberController {
         return new ResponseEntity<List<FootballPlayer>>(footballPlayers,HttpStatus.OK);
     }
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FootballPlayer> getMember(@PathVariable long id){
         FootballPlayer footballPlayer=footballPlayerService.findOne(id);
         if(footballPlayer==null){
@@ -223,7 +222,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/delete/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FootballPlayer> deleteMember(@PathVariable long id){
         if (footballPlayerService.findOne(id)==null){
             return new ResponseEntity<FootballPlayer>(HttpStatus.NO_CONTENT);
@@ -236,17 +235,17 @@ public class MemberController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/add" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/add" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addMember(@Validated @ModelAttribute FootballPlayer footballPlayer){
         footballPlayerService.save(footballPlayer);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "{id}",
+    @PutMapping(value = "/api/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FootballPlayer> updateMember(@PathVariable("id") long id,
-                                                      @RequestBody FootballPlayer footballPlayer) {
+                                                       @RequestBody FootballPlayer footballPlayer) {
         FootballPlayer originMember = footballPlayerService.findOne(id);
 
         if (originMember == null) {
