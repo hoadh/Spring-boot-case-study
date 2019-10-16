@@ -1,9 +1,8 @@
 package com.codegym.controller;
 
-import com.codegym.model.FootballPlayer;
-import com.codegym.model.Location;
-import com.codegym.model.MyFile;
-import com.codegym.model.Squad;
+import com.codegym.model.*;
+import com.codegym.repository.RoleRepository;
+import com.codegym.repository.UserRepository;
 import com.codegym.service.FootballPlayerServiceInterface;
 import com.codegym.service.LocationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,8 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +41,15 @@ public class MemberController {
     public Squad setupSquad(){
         return new Squad();
     }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     @Autowired
     private FootballPlayerServiceInterface footballPlayerServiceInterface;
@@ -45,7 +60,50 @@ public class MemberController {
     @ModelAttribute("location")
     public Iterable<Location> allPosition() {
         return locationServiceInterface.findAll();
+
+
     }
+
+//    @GetMapping("registry")
+//    public String registryForm(){
+//        return "registry";
+//    }
+
+//    @PostMapping("registry")
+//    public String registry(Model model,@RequestParam User user,@RequestParam String role){
+//        User admin = new User();
+//        admin.setEmail(user.getEmail());
+//        admin.setPassword(passwordEncoder.encode(user.getPassword()));
+//        HashSet<Role> roles = new HashSet<>();
+//        roles.add(roleRepository.findByName(role));
+//        admin.setRoles(roles);
+//        userRepository.save(admin);
+//
+//        model.addAttribute("message","Registed success");
+//        return "regidit";
+//    }
+
+
+
+
+    @GetMapping("/403")
+    public String accessDenied() {
+        return "403";
+    }
+
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/";
+    }
+
 
     //home page
     @GetMapping("home")

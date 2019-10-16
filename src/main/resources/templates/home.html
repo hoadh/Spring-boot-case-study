@@ -6,6 +6,7 @@
 <body>
 <div class="container">
     <h3 th:text="#{FootballManagement}"></h3>
+    <a href="/registry">Registry</a>
     <div>
         <div class="search">
         <form action="home">
@@ -65,6 +66,10 @@
     <span th:text="${persons.number + 1}"></span>/<span th:text="${persons.totalPages}"></span>
     <a th:href="@{'/home?page='+${persons.number +1}+'&s='+ ${search}  }" th:if="${persons.hasNext()}">Next</a>
 </div>
+<br>
+<form action="#" th:action="@{/logout}" method="POST">
+    <button type="submit">Logout</button>
+</form>
 <br>
 Language: <a href="?lang=en">English</a> | <a href="?lang=fr">VietNamese</a>
 <br>
