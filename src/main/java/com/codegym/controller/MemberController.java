@@ -19,11 +19,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -150,7 +148,7 @@ public class MemberController {
 
     //Up load images
     @RequestMapping(value = "/uploadFile/{id}", method = RequestMethod.POST)
-    public String uploadFile(@PathVariable long id, MyFile myFile, Model model, HttpServletRequest request) throws IOException {
+    public String uploadFile(@PathVariable long id, MyFile myFile, Model model) throws IOException {
 
 
         MultipartFile multipartFile = myFile.getMultipartFile();
@@ -160,16 +158,15 @@ public class MemberController {
         footballPlayerServiceInterface.save(footballPlayer);
 
         System.out.println(fileName.intern());
-        File file = new File(request.getServletContext().getRealPath("upload"), fileName);
+        File file = new File("/home/min2208/Documents/pictures/", fileName);
         multipartFile.transferTo(file);
-
 
 
         return "redirect:/home";
     }
     //edit image
     @RequestMapping(value = "/editFile/{id}", method = RequestMethod.POST)
-    public String editdFile(@PathVariable long id, MyFile myFile, Model model, HttpServletRequest request) throws IOException {
+    public String editdFile(@PathVariable long id, MyFile myFile, Model model) throws IOException {
 
 
         MultipartFile multipartFile = myFile.getMultipartFile();
@@ -179,7 +176,7 @@ public class MemberController {
         footballPlayerServiceInterface.save(footballPlayer);
 
         System.out.println(fileName.intern());
-        File file = new File(request.getServletContext().getRealPath("upload"), fileName);
+        File file = new File("/home/min2208/Documents/pictures/", fileName);
         multipartFile.transferTo(file);
         model.addAttribute("person", footballPlayerServiceInterface.findOne(id));
 
@@ -187,82 +184,8 @@ public class MemberController {
         return "edit";
     }
 
-//    private String doUpload(HttpServletRequest request, Model model) {
-//
-////        String description = myUploadForm.getDescription();
-////
-////        System.out.println("Description: " + description);
-//
-//        // Thư mục gốc upload file.
-//
-//        String uploadRootPath = request.getServletContext().getRealPath("upload");
-//
-//        System.out.println("uploadRootPath=" + uploadRootPath);
-//
-//        File uploadRootDir = new File(uploadRootPath);
-//
-//        // Tạo thư mục gốc upload nếu nó không tồn tại.
-//
-//        if (!uploadRootDir.exists()) {
-//
-//            uploadRootDir.mkdirs();
-//
-//        }
-//
-////        CommonsMultipartFile[] fileDatas = myUploadForm.getFileDatas();
-////
-////        Map<File, String> uploadedFiles = new HashMap();
-////
-////        for (CommonsMultipartFile fileData : fileDatas) {
-//
-//            // Tên file gốc tại Client.
-//
-//            String name = fileData.getOriginalFilename();
-//
-//            System.out.println("Client File Name = " + name);
-//
-//            if (name != null && name.length() > 0) {
-//
-//                try {
-//
-//                    // Tạo file tại Server.
-//
-//                    File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
-//
-//                    // Luồng ghi dữ liệu vào file trên Server.
-//
-//                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-//
-//                    stream.write(fileData.getBytes());
-//
-//                    stream.close();
-//
-//                    uploadedFiles.put(serverFile, name);
-//
-//                    System.out.println("Write file: " + serverFile);
-//
-//                } catch (Exception e) {
-//
-//                    System.out.println("Error Write file: " + name);
-//
-//                }
-//
-//            }
-//
-//        }
-//
-//        model.addAttribute("description", description);
-//
-//        model.addAttribute("uploadedFiles", uploadedFiles);
-//
-//        return "uploadResult";
-//
-//    }
-
     // add Squad
     @GetMapping("/addSquad/{id}")
-
-
     public String addSquad(@PathVariable long id, @ModelAttribute("squad") Squad squad){
 
         if (!squad.contain(id)){
