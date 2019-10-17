@@ -1,27 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: header">
-    <style>
-        .left {
-            width: 150px;
-            height: 150px;
-            float: left;
-        }
 
-        .img {
-            width: 100px;
-            height: 130px;
-        }
-    </style>
 </head>
 <body>
+<h3 th:text="#{Info}"></h3>
 <div class="container">
-<a href="/home">Go Home</a>
-<div>
-    <h3 th:text="#{Info}"></h3>
-    <img alt="" th:src="@{'/image/'+ ${person.getImg()}}">
-    <div>
-        <form>
+
+
+    <div class="left">
+        <img alt="" class="edit" th:src="@{'/image/'+${person.getImg()}}">
+    </div>
+    <div class="right">
+        <form method="post" th:action="@{/delete/{id}(id=${person.id})}">
             <table>
                 <tr>
                     <td th:text="#{ID}"></td>
@@ -55,11 +46,13 @@
                     <td th:text="#{Weight}"></td>
                     <td th:text="${person.weight}"></td>
                 </tr>
+                <tr>
+                    <td><a href="/home">Go Home</a></td>
+                </tr>
             </table>
 
         </form>
     </div>
-</div>
 </div>
 <br>
 Language: <a href="?lang=en">English</a> | <a href="?lang=fr">VietNamese</a>
