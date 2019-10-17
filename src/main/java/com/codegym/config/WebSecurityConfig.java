@@ -15,7 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    @Autowired
+    CustomSuccessHandler customSuccessHandler;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -35,18 +36,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/home").hasRole("MEMBER")
+                .antMatchers("/user**").hasRole("MEMBER")
                 .antMatchers("/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/home")
+                .successHandler(customSuccessHandler)
                 .failureUrl("/login?error")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");
     }
+
 
 }

@@ -1,6 +1,10 @@
 package com.codegym.config;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import com.codegym.model.Role;
 import com.codegym.model.User;
@@ -9,12 +13,20 @@ import com.codegym.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Autowired
     private UserRepository userRepository;
@@ -60,4 +72,6 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         }
     }
 
+
 }
+

@@ -46,7 +46,7 @@
                     <td th:text="${p.address}"></td>
                     <td th:text="${p.location.name}"></td>
                     <td>
-                        <a th:href="@{/member/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
+                        <a th:href="@{/info/{id}(id=${p.id})}"><img alt="" th:src="@{ '/image/'+${p.getImg()}}"></a>
                     </td>
                 </tr>
             </table>

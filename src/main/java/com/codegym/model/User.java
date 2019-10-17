@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user")
@@ -25,9 +27,14 @@ public class User implements Serializable {
     private int id;
 
     @Column(name = "email", nullable = false, unique = true)
+    @NotEmpty
+    @Min(6)
     private String email;
 
+
     @Column(name = "password", nullable = false)
+    @NotEmpty
+    @Min(6)
     private String password;
 
     @ManyToMany
