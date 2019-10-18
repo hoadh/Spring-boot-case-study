@@ -1,5 +1,7 @@
 package com.codegym.model;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -15,18 +17,12 @@ public class FootballPlayer {
     @NotEmpty
     private String lastName;
 
-    public FootballPlayer(String firstName, String lastName, String img, String address, String age, String height, String weight) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.img = img;
-        this.address = address;
-        this.age = age;
-        this.height = height;
-        this.weight = weight;
+    @NumberFormat
+    private int age;
+
+
+    public FootballPlayer() {
     }
-
-
-    public FootballPlayer(){}
 
 
     public String img;
@@ -35,8 +31,15 @@ public class FootballPlayer {
     @NotEmpty
     private String address;
 
-    @NotEmpty
-    private String age;
+    public FootballPlayer(String firstName, String lastName, String img, String address, int age, String height, String weight) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.img = img;
+        this.address = address;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
+    }
 
     @NotEmpty
     private String height;
@@ -72,11 +75,11 @@ public class FootballPlayer {
         this.address = address;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

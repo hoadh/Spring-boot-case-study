@@ -18,7 +18,8 @@
         </tr>
         <tr>
             <td th:text="#{Age}"></td>
-            <td><input th:field="*{age}" type="text"><span th:if="${#fields.hasErrors('age')}" th:text="#{NotEmpty.footballPlayer.age}"></span></td>
+            <td><input th:field="*{age}" type="text"><span th:if="${#fields.hasErrors('age')}"
+                                                           th:text="#{NumberFormat.footballPlayer.age}"></span></td>
         </tr>
         <tr>
             <td th:text="#{Address}"></td>
