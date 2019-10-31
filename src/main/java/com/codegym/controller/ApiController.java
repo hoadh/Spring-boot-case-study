@@ -24,7 +24,7 @@ public class ApiController {
     private LocationServiceInterface locationServiceInterface;
 
     @ResponseBody
-    @RequestMapping(value = "/api/", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FootballPlayer>> listMember(){
         List<FootballPlayer> footballPlayers = footballPlayerServiceInterface.findAll();
         if (footballPlayers.isEmpty()){
