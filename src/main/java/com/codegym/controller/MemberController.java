@@ -12,10 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,8 +42,8 @@ public class MemberController {
     public Squad setupSquad(){
         return new Squad();
     }
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -65,32 +65,32 @@ public class MemberController {
 
     }
 
-//    @GetMapping("registry")
-//    public String registryForm() {
-//        return "registry";
-//    }
+    @GetMapping("registry")
+    public String registryForm() {
+        return "registry";
+    }
 
-//    @PostMapping("registry")
-//    public String registry(Model model, @RequestParam String username,
-//                           @RequestParam String role,
-//                           @RequestParam String password) {
-//        User admin = new User();
-//        admin.setEmail(username);
-//        admin.setPassword(passwordEncoder.encode(password));
-//        HashSet<Role> roles = new HashSet<>();
-//        if (role.equals("ROLE_ADMIN")) {
-//            roles.add(roleRepository.findByName("ROLE_ADMIN"));
-//            roles.add(roleRepository.findByName("ROLE_MEMBER"));
-//        } else {
-//
-//            roles.add(roleRepository.findByName(role));
-//        }
-//        admin.setRoles(roles);
-//        userRepository.save(admin);
-//
-//        model.addAttribute("message", "Registed success");
-//        return "registry";
-//    }
+    @PostMapping("registry")
+    public String registry(Model model, @RequestParam String username,
+                           @RequestParam String role,
+                           @RequestParam String password) {
+        User admin = new User();
+        admin.setEmail(username);
+        admin.setPassword(passwordEncoder.encode(password));
+        HashSet<Role> roles = new HashSet<>();
+        if (role.equals("ROLE_ADMIN")) {
+            roles.add(roleRepository.findByName("ROLE_ADMIN"));
+            roles.add(roleRepository.findByName("ROLE_MEMBER"));
+        } else {
+
+            roles.add(roleRepository.findByName(role));
+        }
+        admin.setRoles(roles);
+        userRepository.save(admin);
+
+        model.addAttribute("message", "Registed success");
+        return "registry";
+    }
 
 
 
