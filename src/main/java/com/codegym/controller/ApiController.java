@@ -43,7 +43,7 @@ public class ApiController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/api/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<FootballPlayer> deleteMember(@PathVariable long id){
         if (footballPlayerServiceInterface.findOne(id)==null){
             return new ResponseEntity<FootballPlayer>(HttpStatus.NO_CONTENT);
