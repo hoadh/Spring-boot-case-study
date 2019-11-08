@@ -27,6 +27,8 @@ import java.util.Locale;
 
 @SpringBootApplication
 public class CaseStudyApplication {
+	
+	// comment of second commit
 
 	public static void main(String[] args) {
 		SpringApplication.run(CaseStudyApplication.class, args);
