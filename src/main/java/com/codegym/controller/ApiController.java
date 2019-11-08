@@ -16,6 +16,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/test")
 public class ApiController {
     @Autowired
     private FootballPlayerServiceInterface footballPlayerServiceInterface;
